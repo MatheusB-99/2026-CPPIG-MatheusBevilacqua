@@ -1,0 +1,21 @@
+{% extends 'principal.html' %}
+{% block content %}
+<section class="section py-4">
+    <div class="container">
+        <div class="form-slide-shell">
+            <h3 class="form-slide-title">Excluir Chave</h3>
+            <div class="card card-body slide-form">
+                <p class="mb-3">Tem certeza que deseja excluir a chave {{ object.id }} (Sala {{ object.sala.id }})?</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-danger">Confirmar Exclusao</button>
+                        <a class="btn btn-secondary" href="{% url 'chaves' %}">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

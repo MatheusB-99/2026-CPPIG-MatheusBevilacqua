@@ -1,0 +1,22 @@
+{% extends "principal.html" %}
+{% block content %}
+<section class="hero-panel">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mb-3">Painel Inicial</h4>
+        <p class="mb-4">Aqui fica a visão geral do sistema: use os atalhos para navegar entre prédios, salas, chaves, cópias, reservas e empréstimos, enquanto os cartões abaixo mostram os totais atualizados.</p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="{% url 'predios' %}">Predios</a>
+          <a class="btn btn-primary" href="{% url 'salas' %}">Salas</a>
+          <a class="btn btn-primary" href="{% url 'chaves' %}">Chaves</a>
+          <a class="btn btn-primary" href="{% url 'copias_chave' %}">Copias</a>
+          <a class="btn btn-primary" href="{% url 'reservas' %}">Reservas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "registros.html" %}
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'principal.html' %}
+{% load static %}
+{% block content %}
+<section class="section py-4">
+    <div class="container">
+        <div class="mb-3 text-end">
+            <a class="btn btn-success" href="{% url 'sala_nova' %}">Nova Sala</a>
+        </div>
+
+        <form action="" method="GET">
+            <div class="form-group row p-3">
+                <label class="col-sm-2 col-form-label">Endereco do predio:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="text" name="buscar" value="{{ request.GET.buscar }}"
+                           placeholder="Digite o endereco do predio">
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+
+        {% if object_list %}
+            <div class="card-body">
+                <h3 class="text-center">Salas Cadastradas</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-success">
+                            <tr>
+                                <th>ID</th>
+                                <th>Predio</th>
+                                <th>Tipo</th>
+                                <th style="width: 240px; text-align: center">Acoes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sala in object_list %}
+                                <tr>
+                                    <td>{{ sala.id }}</td>
+                                    <td>{{ sala.predio.endereco }}</td>
+                                    <td>{{ sala.tipo_sala_label }}</td>
+                                    <td style="text-align: center">
+                                        <a class="btn btn-sm btn-outline-primary" href="{% url 'chaves' %}">Chaves</a>
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'sala_editar' sala.id %}">Editar</a>
+                                        <a class="btn btn-sm btn-outline-danger" href="{% url 'sala_excluir' sala.id %}">Excluir</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <h5>Nao existem salas cadastradas!</h5>
+        {% endif %}
+
+        {% if is_paginated %}
+            <nav class="mt-3" aria-label="Paginação de salas">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}">Anterior</a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}">Próxima</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
